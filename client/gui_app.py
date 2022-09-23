@@ -1,3 +1,5 @@
+from cgitb import enable
+from math import fabs
 import tkinter as tk
 ##Funcion para crear el menu
 def barra_menu (root):
@@ -15,9 +17,31 @@ def barra_menu (root):
     barra_menu.add_cascade(label='Help')
 
 class Frame(tk.Frame):
+
+    ## Constructor
     def __init__(self,root=None):
         super().__init__(root,width=720, height=520)
         self.root = root
         self.pack()
-        self.config( bg='gray')
+        #self.config( bg='gray')
+        self.campos_peliculas()
+    
+    ##Crear los elementos del frame.
+    def campos_peliculas(self):
+        #Labels de los campos
+        self.label_nombre=tk.Label(self, text="Nombre:")
+        self.label_nombre.config(font=('Arial',12,'bold'))
+        self.label_nombre.grid(row=0,column=0,padx=10,pady=10)
 
+        self.label_duracion=tk.Label(self, text="Duración:")
+        self.label_duracion.config(font=('Arial',12,'bold'))
+        self.label_duracion.grid(row=1,column=0,padx=10,pady=10)
+
+        self.label_genero=tk.Label(self, text="Género:")
+        self.label_genero.config(font=('Arial',12,'bold'))
+        self.label_genero.grid(row=2,column=0,padx=10,pady=10)
+
+        #campos de entrada
+        self.entry_nombre=tk.Entry(self)
+        self.entry_nombre.config(width=50,state='disabled')
+        self.entry_nombre.grid(row=0,column=1)
