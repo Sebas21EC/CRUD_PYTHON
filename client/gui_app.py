@@ -53,3 +53,17 @@ class Frame(tk.Frame):
         self.entry_genero=tk.Entry(self)
         self.entry_genero.config(width=50,state='disabled',font=('Arial',12))
         self.entry_genero.grid(row=2,column=1,padx=10,pady=10)
+
+        #botones
+        self.btn_nuevo=tk.Button(self,text="Nuevo")
+        self.btn_nuevo.config(width=20,font=('Arial',12,'bold'),fg='white',background='#04B404', curso='hand2',activebackground='#35BD6F')
+        self.btn_nuevo.grid(row=4,column=0)
+
+        self.btn_guardar=tk.Button(self,text="Guardar")
+        self.btn_guardar.config(width=20,font=('Arial',12,'bold'),fg='white',background='blue', curso='hand2',activebackground='cyan')
+        self.btn_guardar.grid(row=4,column=1)
+
+        self.btn_cancelar=tk.Button(self,text="Cancelar")
+        self.btn_cancelar.config(width=20,font=('Arial',12,'bold'),fg='white',background='orange', curso='hand2',activebackground='brown')
+        self.btn_cancelar.grid(row=4,column=2)
+
