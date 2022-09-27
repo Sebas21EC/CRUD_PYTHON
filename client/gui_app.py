@@ -3,8 +3,9 @@ from math import fabs
 from pydoc import cram
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 from model.pelicula_dao import crear_tabla,eliminar_tabla
-from model.pelicula_dao import Pelicula,guardar,listar_peliculas
+from model.pelicula_dao import Pelicula,guardar,listar_peliculas,editar
 
 ##Funcion para crear el menu
 def barra_menu (root):
@@ -28,6 +29,8 @@ class Frame(tk.Frame):
         super().__init__(root,width=720, height=520)
         self.root = root
         self.pack()
+        self.id_pelicula=None
+
         #self.config( bg='gray')
         self.campos_peliculas()
         self.deshabilitar_campos()
@@ -109,11 +112,14 @@ class Frame(tk.Frame):
             self.duracion.get(),
             self.genero.get(),
         )
+        if self.id_pelicula==None:
+            guardar(pelicula)
+        else:
+            editar(pelicula,self.id_pelicula)
 
-        guardar(pelicula)
         self.tabla_datos()
-
         self.deshabilitar_campos()
+        self.id_pelicula=None
 
     #Diseñar la tabla de datos
     def tabla_datos(self):
@@ -137,11 +143,29 @@ class Frame(tk.Frame):
         for p in self.lista_peliculas:
             self.table.insert('',0,text=p[0],values=(p[1],p[2],p[3]))
         
-        self.btn_editar=tk.Button(self,text="Editar")
+        self.btn_editar=tk.Button(self,text="Editar",command=self.editar_datos)
         self.btn_editar.config(width=20,font=('Arial',12,'bold'),fg='white',background='#04B404', curso='hand2',activebackground='#35BD6F')
         self.btn_editar.grid(row=5,column=0)
 
         self.btn_eliminar=tk.Button(self,text="Eliminar")
         self.btn_eliminar.config(width=20,font=('Arial',12,'bold'),fg='white',background='orange', curso='hand2',activebackground='brown')
         self.btn_eliminar.grid(row=5,column=1)
+    
+    def editar_datos(self):
+        try:
+            self.id_pelicula=self.table.item(self.table.selection())['text']
+            self.nombre_pelicula=self.table.item(self.table.selection())['values'][0]
+            self.duracion_pelicula=self.table.item(self.table.selection())['values'][1]
+            self.genero_pelicula=self.table.item(self.table.selection())['values'][2]
+
+            self.habilitar_campos()
+
+            self.entry_nombre.insert(0,self.nombre_pelicula)
+            self.entry_duracion.insert(0,self.duracion_pelicula)
+            self.entry_genero.insert(0,self.genero_pelicula)
+
+        
+        except:
+            
+            messagebox.showinfo('Edición de datos','No ha seleccionado ningun registro')
     
