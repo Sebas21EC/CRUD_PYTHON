@@ -121,7 +121,12 @@ class Frame(tk.Frame):
         self.lista_peliculas.reverse()
 
         self.table=ttk.Treeview(self,columns=('Nombre','Duración','Género'))
-        self.table.grid(row=4,column=0,columnspan=4)
+        self.table.grid(row=4,column=0,columnspan=4,sticky='nse')
+       
+        #ScrollBar para la tabla
+        self.scroll=ttk.Scrollbar(self,orient='vertical',command=self.table.yview)
+        self.scroll.grid(row=4, column=4,sticky='nse')
+        self.table.configure(yscrollcommand=self.scroll.set)
 
         self.table.heading('#0',text='ID')
         self.table.heading('#1',text='NOMBRE')
