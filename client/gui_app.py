@@ -4,6 +4,7 @@ from pydoc import cram
 import tkinter as tk
 from tkinter import ttk
 from model.pelicula_dao import crear_tabla,eliminar_tabla
+from model.pelicula_dao import Pelicula,guardar,listar_peliculas
 
 ##Funcion para crear el menu
 def barra_menu (root):
@@ -103,12 +104,22 @@ class Frame(tk.Frame):
 
     def guardar_datos(self):
 
+        pelicula=Pelicula(
+            self.nombre.get(),
+            self.duracion.get(),
+            self.genero.get(),
+        )
 
+        guardar(pelicula)
+        self.tabla_datos()
 
         self.deshabilitar_campos()
 
     #Diseñar la tabla de datos
     def tabla_datos(self):
+        self.lista_peliculas=listar_peliculas()
+        self.lista_peliculas.reverse()
+
         self.table=ttk.Treeview(self,columns=('Nombre','Duración','Género'))
         self.table.grid(row=4,column=0,columnspan=4)
 
@@ -118,9 +129,9 @@ class Frame(tk.Frame):
         self.table.heading('#3',text='GÉNERO')
 
         #INSERTAR DAOTS EN LA TABLA
-        self.table.insert('',0,text=1,values=('Table 19','2,55','Comedia'))
+        for p in self.lista_peliculas:
+            self.table.insert('',0,text=p[0],values=(p[1],p[2],p[3]))
         
-
         self.btn_editar=tk.Button(self,text="Editar")
         self.btn_editar.config(width=20,font=('Arial',12,'bold'),fg='white',background='#04B404', curso='hand2',activebackground='#35BD6F')
         self.btn_editar.grid(row=5,column=0)

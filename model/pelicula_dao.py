@@ -27,15 +27,53 @@ def crear_tabla():
 def eliminar_tabla():
     conexion=Conexion_DB()
     sql = ' DROP TABLE peliculas_tb'
-    conexion.cursor.execute(sql)
-    conexion.cerrar_db()
+
     titulo = 'Borrar Registro'
     try:
         conexion.cursor.execute(sql)
         conexion.cerrar_db()
-        mensaje = 'Se eliminó la tabla en la base de datos'
-
+        mensaje = 'Se eliminó la tabla de la base de datos'
     except:
         mensaje = 'No existe esta tabla para eliminar'
     
     messagebox.showerror(titulo,mensaje)
+
+
+class Pelicula:
+    def __init__(self,nombre,duracion,genero):
+        self.id_pelicula=None
+        self.nombre=nombre
+        self.duracion=duracion
+        self.genero=genero
+
+    def __str__(self):
+        return f'Pelicula[{self.nombre},{self.duracion},{self.genero}]'
+
+def guardar(pelicula):
+    conexion=Conexion_DB()
+    sql=f"""INSERT INTO peliculas_tb ('nombre','duracion','genero') 
+    VALUES('{pelicula.nombre}','{pelicula.duracion}','{pelicula.genero}')"""
+    
+    
+    try:
+        conexion.cursor.execute(sql)
+        conexion.cerrar_db()
+    except:
+        titulo ="Conexion al registro"
+        mensaje ="La tabla peliculas no esta creada en la base de datos"
+        messagebox.showwarning(titulo,mensaje)
+
+def listar_peliculas():
+    conexion=Conexion_DB()
+
+    lista_peliculas=[]
+    sql='SELECT * FROM peliculas_tb'
+
+    try:
+        conexion.cursor.execute(sql)
+        lista_peliculas=conexion.cursor.fetchall()
+        conexion.cerrar_db()
+    except:
+        messagebox.showwarning('Mostrar registros','No existe la tabla pelculas')
+    
+    return lista_peliculas
