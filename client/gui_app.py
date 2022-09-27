@@ -1,7 +1,9 @@
 from cgitb import enable
 from math import fabs
+from pydoc import cram
 import tkinter as tk
 from tkinter import ttk
+from model.pelicula_dao import crear_tabla,eliminar_tabla
 
 ##Funcion para crear el menu
 def barra_menu (root):
@@ -11,8 +13,8 @@ def barra_menu (root):
     menu_inicio=tk.Menu(barra_menu,tearoff=0)
     barra_menu.add_cascade(label='Inicio',menu=menu_inicio)
     
-    menu_inicio.add_command(label='Crear Registro')
-    menu_inicio.add_command(label='Eliminar Registro')
+    menu_inicio.add_command(label='Crear Registro',command=crear_tabla)
+    menu_inicio.add_command(label='Eliminar Registro',command=eliminar_tabla)
     menu_inicio.add_command(label='Exit',command=root.destroy)
 
     barra_menu.add_cascade(label='Consultas')
