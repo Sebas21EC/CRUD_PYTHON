@@ -91,3 +91,12 @@ def editar(pelicula,id_pelicula):
     except:
         messagebox.showwarning('Edicion de dato','No se pudo editar la película')
     
+def eliminar(id_pelicula):
+    conexion=Conexion_DB()
+    sql=f'DELETE FROM peliculas_tb WHERE id_pelicula={id_pelicula}'
+
+    try:
+        conexion.cursor.execute(sql)
+        conexion.cerrar_db()
+    except:
+        messagebox.showwarning('Elinar Datos','No se pudo eliminar el registro')
